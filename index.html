@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amochito...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #FFF0F5;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #FF69B4;
+            font-size: 2.5em;
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            font-family: 'Playfair Display', serif;
+        }
+        button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: #FF1493;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .error {
+            color: #FF69B4;
+            font-size: 24px;
+        }
+        .countdown {
+            font-size: 48px;
+            color: #FF1493;
+            margin: 20px 0;
+        }
+        .message {
+            font-size: 20px;
+            color: #FF1493;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .confetti {
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            position: absolute;
+            animation: fall 5s ease-in infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+        .tip {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 105, 180, 0.2);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <h1>¿Quién es el amor de mi vida?</h1>
+        <input type="text" id="nombre-input" placeholder="Introduce tu respuesta">
+        <button onclick="verificarNombre()">❤️</button>
+    </div>
+
+    <script>
+        function verificarNombre() {
+            const nombre = document.getElementById('nombre-input').value.toLowerCase();
+            const container = document.getElementById('main-container');
+
+            if (nombre === 'yo' || nombre === 'fiorella') {
+                iniciarCelebración();
+            } else {
+                mostrarError();
+            }
+        }
+
+        function mostrarError() {
+            document.body.style.backgroundImage = "url('https://i.pinimg.com/736x/57/27/25/5727252dea0f742fd85c8a55511219a5.jpg')";
+            const container = document.getElementById('main-container');
+            container.innerHTML = `
+                <h1 class="error">Inténtalo de nuevo mi amor, usted puede</h1>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/b3FJgIZVW4g" 
+                    title="YouTube video player" frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+                <br><br>
+                <button onclick="location.reload()">Dale amor</button>
+            `;
+            const tip = document.createElement('div');
+            tip.className = 'tip';
+            tip.textContent = 'Tip: El amor de mi vida siempre vas a ser vos';
+            document.body.appendChild(tip);
+        }
+
+        function iniciarCelebración() {
+            document.body.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxz-JXW-dAdkm5ZGejOybgn-PjZX5lw6RwVA&s')";
+            const container = document.getElementById('main-container');
+            container.innerHTML = `
+                <div class="message">Por supuesto que sos el amor de mi vida, pero vas a tener que esperar la sorpresa mi amor, cuando este contador llegue a 0 me avisas si?</div>
+                <div class="countdown" id="countdown"></div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5gsp7eNmT-c" 
+                    title="YouTube video player" frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+            `;
+
+            // Crear confeti
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(confetti);
+            }
+
+            actualizarContador();
+            setInterval(actualizarContador, 1000);
+        }
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const objetivo = new Date('2024-08-22T00:00:00-03:00'); // Zona horaria de Argentina (ART)
+            const diferencia = objetivo - ahora;
+
+            if (diferencia > 0) {
+                const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+                const contadorTexto = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+                document.getElementById('countdown').innerText = contadorTexto;
+                document.title = contadorTexto; // Actualiza el título de la página
+            } else {
+                const mensaje = '¡Feliz Cumpleaños!';
+                document.getElementById('countdown').innerText = mensaje;
+                document.title = mensaje; // Actualiza el título de la página
+            }
+        }
+    </script>
+</body>
+</html>
