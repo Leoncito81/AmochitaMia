@@ -11,7 +11,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             background-color: #FFF0F5;
             background-size: cover;
@@ -36,6 +36,8 @@
             padding: 10px;
             font-size: 16px;
             font-family: 'Playfair Display', serif;
+            width: 80%;
+            max-width: 300px;
         }
         button {
             background-color: transparent;
@@ -55,8 +57,9 @@
         }
         .countdown {
             font-size: 48px;
-            color: #FF1493;
+            color: #000000;
             margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
         }
         .message {
             font-size: 20px;
@@ -85,12 +88,23 @@
             color: rgba(255, 105, 180, 0.2);
             font-size: 18px;
         }
+        .birthday-message {
+            background-color: pink;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        .flower {
+            position: fixed;
+            font-size: 30px;
+        }
     </style>
 </head>
 <body>
     <div class="container" id="main-container">
         <h1>¿Quién es el amor de mi vida?</h1>
-        <input type="text" id="nombre-input" placeholder="Introduce tu respuesta">
+        <input type="text" id="nombre-input" placeholder="Introduce tu respuesta (Yo, Fiorella, o...)">
         <button onclick="verificarNombre()">❤️</button>
     </div>
 
@@ -99,7 +113,7 @@
             const nombre = document.getElementById('nombre-input').value.toLowerCase();
             const container = document.getElementById('main-container');
 
-            if (nombre === 'yo' || nombre === 'fiorella') {
+            if (nombre === 'yo' || nombre === 'fiorella' || nombre === 'por supuesto que yo') {
                 iniciarCelebración();
             } else {
                 mostrarError();
@@ -164,9 +178,33 @@
                 document.getElementById('countdown').innerText = contadorTexto;
                 document.title = contadorTexto; // Actualiza el título de la página
             } else {
-                const mensaje = '¡Feliz Cumpleaños!';
-                document.getElementById('countdown').innerText = mensaje;
-                document.title = mensaje; // Actualiza el título de la página
+                mostrarMensajeCumpleaños();
+            }
+        }
+
+        function mostrarMensajeCumpleaños() {
+            document.body.innerHTML = '';
+            document.body.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxz-JXW-dAdkm5ZGejOybgn-PjZX5lw6RwVA&s')";
+            
+            const mensaje = document.createElement('div');
+            mensaje.className = 'container';
+            mensaje.innerHTML = `
+                <h1 style="font-size: 3em; color: #FF1493;">Feliz cumpleaños mi chica hermosa</h1>
+                <div class="birthday-message">
+Mi amor, hoy cumplís un año más, tan rápido 19 años, sos y siempre vas a ser una chica hermosa, perdón que no haya incluido más cosas como fotitos nuestras en este apartado, pero es todo lo que tengo por usted mi chiquita, prometo luego hacerte una mejor y más detallada, pero por ahora, disfruta mi amor, gracias por formar parte de mi vida, por ser mi esposa, mi todo, sin vos literalmente me muero, te amo más que una porción de pizza mi amor, gracias por pertenecer a mi vida y ser completamente mía muejejeje, si estás acá para cuando este contador haya llegado a 0, quiero que entres a WhatsApp y digas la palabra 'Girasol', cuando lo hagas voy a darte una gran sorpresa, pero por ahora, disfruta el día mi amor, hoy sos la cumpleañera así que estoy a tu disposición jejeje, te amo mi amor, sos y siempre vas a ser la única:3, que descanses amor que hoy tenemos muchas cosas para hacer jejejeje, TE AMO MI CHIQUITA.
+                </div>
+            `;
+            document.body.appendChild(mensaje);
+
+            // Agregar flores decorativas
+            const flores = ['🌸', '🌺', '🌼', '🌻', '🌹'];
+            for (let i = 0; i < 20; i++) {
+                const flor = document.createElement('div');
+                flor.className = 'flower';
+                flor.style.left = `${Math.random() * 100}vw`;
+                flor.style.top = `${Math.random() * 100}vh`;
+                flor.textContent = flores[Math.floor(Math.random() * flores.length)];
+                document.body.appendChild(flor);
             }
         }
     </script>
